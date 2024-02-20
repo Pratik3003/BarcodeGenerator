@@ -1,0 +1,52 @@
+/* BarcodeGenerator.css */
+.THIS {
+    font-family: 'Arial', sans-serif;
+    max-width: 400px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+
+.THIS label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: #333;
+}
+
+.THIS lightning-input {
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.THIS lightning-input:focus,
+.THIS lightning-input:active{
+    box-shadow: inset gray 0px 0px 60px -12px; 
+    outline: none;
+
+}
+
+.THIS button {
+    padding: 10px 15px;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+ 
+}
+
+.THIS button:hover {
+        background-color: #3e8e41;
+        /* Add more styles for hovering here */
+        /* For example: */
+        color: #fff;
+        font-weight: bold;
+    }
