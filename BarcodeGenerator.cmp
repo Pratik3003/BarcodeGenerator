@@ -5,6 +5,8 @@
     <aura:attribute name="barcodeValue" type="String" />
     <aura:attribute name="selectedFormat" type="String" default="CODE128" />
     <aura:attribute name="barcodeGenerated" type="Boolean" default="false" />
+     <aura:attribute name="errorMessage" type="String" />
+    
 
     <div class = "main" style="{!'background:transparent;  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); margin-top:40px; padding: 20px;'}">
         <label for="barcodeInput">Enter Barcode Value:</label>
@@ -26,4 +28,10 @@
         <h2 aura:id="outputHeader" style="{!'display: ' + (v.barcodeGenerated ? 'block' : 'none') + '; color: #333; font-size: 24px; transition: opacity 0.5s ease-in-out;'}">OUTPUT:</h2>
         <canvas aura:id="barcodeCanvas" id="barcodeCanvas" style="{!'animation: fadeIn 1s ease-in-out; '}"></canvas>
     </div>
+  <aura:if isTrue="{!not(empty(v.errorMessage))}">
+    <div style="{!'color: red;
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 8px;'}" class="error-message">{!v.errorMessage}</div>
+</aura:if>
 </aura:component>
