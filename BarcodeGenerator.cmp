@@ -1,37 +1,90 @@
-<!-- BarcodeGenerator.cmp -->
 <aura:component>
     <ltng:require scripts="{!$Resource.Barcode + '/Barcode/JsBarcode.all.min.js'}"/>
 
     <aura:attribute name="barcodeValue" type="String" />
     <aura:attribute name="selectedFormat" type="String" default="CODE128" />
     <aura:attribute name="barcodeGenerated" type="Boolean" default="false" />
-     <aura:attribute name="errorMessage" type="String" />
-    
+    <aura:attribute name="errorMessage" type="String" />
 
-    <div class = "main" style="{!'background:transparent;  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); margin-top:40px; padding: 20px;'}">
+    <div class="main" style="{!'background:transparent;  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); margin-top:40px; padding: 20px;'}">
         <label for="barcodeInput">Enter Barcode Value:</label>
         <lightning:input type="text" id="barcodeInput" value="{!v.barcodeValue}" oninput="{!c.generateBarcode}" />
         
         <!-- Add a selector for barcode format -->
-        <lightning:select class = "select" name="formatSelector" label="Select Barcode Format" value="{!v.selectedFormat}" onchange="{!c.generateBarcode}">
+        <lightning:select class="select" name="formatSelector" label="Select Barcode Format" value="{!v.selectedFormat}">
             <option value="CODE128">CODE 128</option>
             <option value="CODE39">CODE 39</option>
             <option value="EAN5">EAN 5</option>
-            <option value="ITF14">ITF 14</option>
+            <option value="UPC">UPC</option>
             <!-- Add more format options as needed -->
         </lightning:select>
 
         <button style="{!'margin-top: 10px;'}" onclick="{!c.generateBarcode}">Generate Barcode</button>
+        
+        <!-- Error message display -->
+        <!-- Error message display -->
+
+
     </div>
 
+<!-- Error message display -->
+<aura:if isTrue="{!not(empty(v.errorMessage))}">
+    <div style="{!'text-align: center;'}">
+        <div style="{!'color: red; font-size: 16px; font-weight: bold; margin-top: 8px;'}" class="error-message">{!v.errorMessage}</div>
+        <!-- Display static resource images based on error -->
+        <aura:if isTrue="{!v.errorMessage == 'Invalid barcode input for EAN5 format. Barcode value must be 5 digits.'}">
+            <div style="{!'text-align: center; font-size: 14px; margin-bottom: 10px;'}">
+    <p>Valid barcode formats for EAN5: </p>
+</div>
+            <div style="text-align: center;">
+    <div style="display: block; margin: 0 auto;">
+        <div style="overflow: auto;">
+    <div style="float: left; padding-left: 10%;">12345</div>
+    <div style="float: right; padding-right: 10%;">87654</div>
+    <div style="margin: 0 auto; width: calc(100% - 220px); padding: 0 10px;">30031</div>
+</div>
+
+        <img src="{!$Resource.BarcodeImages + '/BarcodeImages/EAN5.png'}" alt="Invalid EAN5 Barcode Error" style="display: block; margin: 0 auto;" />
+    </div>
+</div>
+
+        </aura:if>
+         <aura:if isTrue="{!v.errorMessage == 'Invalid barcode input for CODE39 format.'}">
+ <div style="text-align: center; font-size: 14px; margin-bottom: 10px; margin-left: 25px;">
+    <p style="text-align: left;">Please ensure your input contains only:</p>
+    <ul style="list-style-type: none; padding-left: 0; text-align: left;">
+        <li><span style="color: #0070cc;">&#8226;</span> Digits: 0 to 9</li>
+        <li><span style="color: #0070cc;">&#8226;</span> Uppercase letters: A to Z</li>
+        <li><span style="color: #0070cc;">&#8226;</span> Special characters: -, ., space, $, /, +, %</li>
+    </ul>
+</div>
+
+
+
+
+</aura:if>
+
+        <aura:if isTrue="{!v.errorMessage == 'Invalid barcode input for UPC format. Barcode value must be 12 digits.'}">
+               <div style="{!'text-align: center; font-size: 14px; margin-bottom: 10px;'}">
+    <p>Valid barcode formats for UPC: </p>
+</div>
+            <div style="display: block; margin: 0 auto;">
+                <div style="overflow: auto;">
+    <div style="float: left; padding-left: 5%;">012345678905</div>
+    <div style="float: right; padding-right: 5%;">123456778900</div>
+    <div style="margin: 0 auto; padding: 0 9%;">034567899012</div>
+</div>
+
+        <img src="{!$Resource.BarcodeImages + '/BarcodeImages/UPC.png'}" alt="Invalid UPC Barcode Error"/>
+                </div>
+        </aura:if>
+    </div>
+</aura:if>
+
+
+    <!-- Barcode output -->
     <div style="{!'align-items: center; text-align: center; margin-top: 20px; opacity: ' + (v.barcodeGenerated ? '1' : '0') + '; transition: opacity 0.5s ease-in-out;'}">
         <h2 aura:id="outputHeader" style="{!'display: ' + (v.barcodeGenerated ? 'block' : 'none') + '; color: #333; font-size: 24px; transition: opacity 0.5s ease-in-out;'}">OUTPUT:</h2>
         <canvas aura:id="barcodeCanvas" id="barcodeCanvas" style="{!'animation: fadeIn 1s ease-in-out; '}"></canvas>
     </div>
-  <aura:if isTrue="{!not(empty(v.errorMessage))}">
-    <div style="{!'color: red;
-    font-size: 16px;
-    font-weight: bold;
-    margin-top: 8px;'}" class="error-message">{!v.errorMessage}</div>
-</aura:if>
 </aura:component>
